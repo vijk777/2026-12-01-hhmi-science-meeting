@@ -26,14 +26,6 @@
   #bar button:hover { background: #38405a; }
   #bar input[type=range] { flex: 1 1 auto; min-width: 0; margin: 0; }
   #bar output { font-variant-numeric: tabular-nums; white-space: nowrap; align-self: center; }
-  #fs-float {
-    position: fixed; top: 8px; right: 8px; font: 16px/1 system-ui, sans-serif; color: #fff;
-    background: rgba(20, 24, 31, 0.6); border: 0; border-radius: 4px; padding: 6px 9px;
-    cursor: pointer; opacity: 0.35; transition: opacity 0.15s;
-  }
-  body:hover #fs-float, #fs-float:focus { opacity: 1; }
-  html:-webkit-full-screen { background: #000; }
-  html:fullscreen { background: #000; }
 </style>
 </head>
 <body>
@@ -68,33 +60,6 @@
   }
   document.body.appendChild(el);
 
-  // Full screen needs the host iframe to carry allowfullscreen; if it does not
-  // (or the browser has no Fullscreen API), open the page in a new tab instead.
-  function toggleFullscreen() {
-    const d = document, root = d.documentElement;
-    if (d.fullscreenElement || d.webkitFullscreenElement) {
-      return (d.exitFullscreen || d.webkitExitFullscreen).call(d);
-    }
-    const request = root.requestFullscreen || root.webkitRequestFullscreen;
-    const fallback = () => window.open(location.href, "_blank");
-    if (!request || !(d.fullscreenEnabled || d.webkitFullscreenEnabled)) return fallback();
-    try {
-      const done = request.call(root);
-      if (done && done.catch) done.catch(fallback);
-    } catch {
-      fallback();
-    }
-  }
-  if (ok && !stepMode) {
-    const fs = document.createElement("button");
-    fs.id = "fs-float";
-    fs.title = "Full screen";
-    fs.innerHTML = "&#x2922;";
-    fs.onclick = toggleFullscreen;
-    document.body.appendChild(fs);
-    if (!el.controls) el.onclick = toggleFullscreen;
-  }
-
   if (stepMode) {
     const fps = Number(params.get("fps")) > 0 ? Number(params.get("fps")) : 30;
     const bar = document.createElement("div");
@@ -104,8 +69,7 @@
       '<button id="play" title="Play / pause (space)">&#9654;</button>' +
       '<button id="fwd" title="Forward 1 frame (right arrow)">1 &#9654;</button>' +
       '<input id="seek" type="range" min="0" max="0" step="1" value="0">' +
-      '<output id="count">-</output>' +
-      '<button id="fs" title="Full screen (f)">&#x2922;</button>';
+      '<output id="count">-</output>';
     document.body.appendChild(bar);
     const $ = (id) => document.getElementById(id);
     const seek = $("seek"), count = $("count"), play = $("play");
@@ -143,14 +107,11 @@
     $("back").onclick = () => step(-1);
     $("fwd").onclick = () => step(1);
     play.onclick = toggle;
-    $("fs").onclick = toggleFullscreen;
-    el.ondblclick = toggleFullscreen;
     seek.oninput = () => { el.pause(); show(Number(seek.value)); };
     document.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") step(-1);
       else if (e.key === "ArrowRight") step(1);
       else if (e.key === " " && e.target.tagName !== "BUTTON") toggle();
-      else if (e.key === "f") toggleFullscreen();
       else return;
       e.preventDefault();
     });
