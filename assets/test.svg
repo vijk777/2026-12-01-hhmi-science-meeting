@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360">
+  <rect width="640" height="360" fill="#10131a"/>
+  <rect x="4" y="4" width="632" height="352" fill="none" stroke="#4da3ff" stroke-width="2" stroke-dasharray="8 6"/>
+  <circle cx="320" cy="150" r="40" fill="#4da3ff">
+    <animate attributeName="r" values="30;55;30" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="fill" values="#4da3ff;#ff7a59;#4da3ff" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <text x="320" y="260" fill="#e8ecf3" font-family="system-ui, sans-serif" font-size="28" text-anchor="middle">iframe embed test</text>
+  <text x="320" y="295" fill="#8a93a6" font-family="system-ui, sans-serif" font-size="16" text-anchor="middle">pulsing circle = animation works; dashed border = full frame visible</text>
+</svg>

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poster asset</title>
+<style>
+  html, body { margin: 0; height: 100%; background: transparent; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  img, video { width: 100%; height: 100%; object-fit: contain; display: block; }
+  p { font: 14px/1.4 system-ui, sans-serif; color: #888; padding: 1em; text-align: center; }
+</style>
+</head>
+<body>
+<script>
+  // Usage: embed.html?src=<file in assets/>[&bg=<css color>][&controls=1]
+  // Images and GIFs render as <img>; mp4/webm render as a muted, looping, autoplaying <video>.
+  const params = new URLSearchParams(location.search);
+  const name = params.get("src") || "";
+  const bg = params.get("bg");
+  if (bg && /^[#a-zA-Z0-9]+$/.test(bg)) document.body.style.background = bg;
+
+  // Only serve files from this repo's assets/ folder (no external URLs, no path traversal).
+  const ok = /^[\w.\-]+(\/[\w.\-]+)*$/.test(name) && !name.includes("..");
+  let el;
+  if (!ok) {
+    el = document.createElement("p");
+    el.textContent = "Usage: embed.html?src=<file in assets/>";
+  } else if (/\.(mp4|webm|mov)$/i.test(name)) {
+    el = document.createElement("video");
+    el.src = "assets/" + name;
+    el.autoplay = el.loop = el.muted = el.playsInline = true;
+    el.controls = params.get("controls") === "1";
+  } else {
+    el = document.createElement("img");
+    el.src = "assets/" + name;
+    el.alt = name;
+  }
+  document.body.appendChild(el);
+</script>
+</body>
+</html>
