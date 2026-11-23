@@ -34,6 +34,18 @@ ffmpeg -framerate 1 -i frames/%03d.png -c:v libx264 -crf 18 -g 1 -bf 0 \
        -pix_fmt yuv420p -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" -movflags +faststart -an assets/<name>.mp4
 ```
 
+### Sizing the iframe
+
+The page fills whatever box the host gives it; it cannot resize its own iframe. To span the column and keep the right shape, set the size on the iframe tag:
+
+- Plain embed: `aspect-ratio` = media width / height.
+- Step mode: the control bar adds 5.5% of the width, so use width / (height + 0.055 * width). For 1900x1080 that is `1900 / 1185`.
+
+```html
+<iframe src="https://<host>/2026-12-01-hhmi-science-meeting/embed.html?src=flip_tour.mp4&step=1&fps=1"
+        style="width:100%; aspect-ratio:1900/1185; border:0; display:block" allowfullscreen></iframe>
+```
+
 iPoster needs a public `https://` URL, so the repo has to be hosted first (e.g. GitHub Pages). Then:
 
 ```html

@@ -9,17 +9,23 @@
   body { display: flex; flex-direction: column; align-items: center; justify-content: center; }
   img, video { flex: 1 1 0; min-height: 0; width: 100%; object-fit: contain; display: block; }
   p { font: 14px/1.4 system-ui, sans-serif; color: #888; padding: 1em; text-align: center; }
+  /* Bar size scales with page width (capped), so the page keeps a fixed aspect
+     ratio at column widths up to 800px: video height + 5.5% of the width. */
+  :root { --u: min(1vw, 8px); }
   #bar {
-    flex: 0 0 auto; box-sizing: border-box; width: 100%; padding: 6px 10px;
-    display: flex; align-items: center; gap: 8px;
-    background: #15181f; color: #e8ecf3; font: 13px/1 system-ui, sans-serif;
+    flex: 0 0 auto; box-sizing: border-box; width: 100%; height: calc(5.5 * var(--u));
+    padding: calc(0.7 * var(--u)) calc(1.2 * var(--u));
+    display: flex; align-items: stretch; gap: var(--u);
+    background: #15181f; color: #e8ecf3; font: calc(1.7 * var(--u))/1 system-ui, sans-serif;
   }
   #bar button {
     font: inherit; color: inherit; background: #2a3040; border: 1px solid #3c4458;
-    border-radius: 4px; padding: 6px 12px; cursor: pointer; min-width: 40px;
+    border-radius: calc(0.5 * var(--u)); padding: 0 calc(1.4 * var(--u)); cursor: pointer;
+    min-width: calc(5 * var(--u));
   }
   #bar button:hover { background: #38405a; }
-  #bar input[type=range] { flex: 1 1 auto; min-width: 0; }
+  #bar input[type=range] { flex: 1 1 auto; min-width: 0; margin: 0; }
+  #bar output { font-variant-numeric: tabular-nums; white-space: nowrap; align-self: center; }
   #fs-float {
     position: fixed; top: 8px; right: 8px; font: 16px/1 system-ui, sans-serif; color: #fff;
     background: rgba(20, 24, 31, 0.6); border: 0; border-radius: 4px; padding: 6px 9px;
@@ -28,7 +34,6 @@
   body:hover #fs-float, #fs-float:focus { opacity: 1; }
   html:-webkit-full-screen { background: #000; }
   html:fullscreen { background: #000; }
-  #bar output { font-variant-numeric: tabular-nums; white-space: nowrap; }
 </style>
 </head>
 <body>
