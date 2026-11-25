@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZAPBench comparison</title>
+<style>
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#222;background:#fff}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:10px 12px}
+th{font-weight:bold;border-bottom:1px solid #888}
+td{border-bottom:1px solid #ddd}
+td:first-child{color:#555}
+p{font-size:14px;font-style:italic;color:#555;margin:12px}
+</style>
+</head>
+<body>
+<table>
+<tr><th></th><th>ZAPBench (Lueckmann et al. 2025)</th><th>Ours</th></tr>
+<tr><td>Modalities used</td><td>Lightsheet</td><td>Lightsheet + confocal</td></tr>
+<tr><td>Neurons detected</td><td>72K</td><td>89K</td></tr>
+<tr><td>Cross-modal registration</td><td>&mdash;</td><td>Learned</td></tr>
+<tr><td>Lightsheet stripe noise</td><td>&mdash;</td><td>Modeled</td></tr>
+</table>
+<p>Adding confocal lets us detect 17K more neurons and anchor them for registration to EM.</p>
+</body>
+</html>

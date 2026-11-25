@@ -6,6 +6,8 @@ Assets for the HHMI Science Meeting poster (2026-12-01), plus a small page for e
 
 - `assets/` - images, GIFs, and videos used on the poster.
 - `embed.html` - chrome-less viewer for a single asset, meant to be loaded inside an iframe.
+- `snippets/` - standalone HTML pages (tables etc.) to load in an iPoster iframe via `src`.
+  - `zapbench_comparison_table.html` - ZAPBench vs. ours comparison table.
 
 ## Embedding in an iPoster
 
@@ -58,4 +60,5 @@ iPoster needs a public `https://` URL, so the repo has to be hosted first (e.g. 
 ```sh
 python3 -m http.server 8000
 # http://localhost:8000/embed.html?src=flip_tour.mp4
+# http://localhost:8000/snippets/zapbench_comparison_table.html
 ```
